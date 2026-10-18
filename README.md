@@ -25,7 +25,9 @@ Day 1: project scope and requirements defined. Application implementation and de
 
 ## Documentation
 
+- [Day 1 study guide and exercises](docs/day-01.md)
 - [Requirements and acceptance checks](docs/requirements.md)
+- [Seven page layout plans](docs/page-layouts.md)
 
 ## Day 1 learning goals
 
