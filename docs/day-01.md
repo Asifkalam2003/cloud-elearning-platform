@@ -1,115 +1,312 @@
-# Day 1 — Project foundations
+# Day 1 — Cloud-Based E-Learning Platform
 
-## Outcome and time
+**Project:** Cloud-Based E-Learning Platform
+**Day:** 01 — Project Planning and Fundamentals
+**Date:** 21 October 2026
+**Technology Stack:** HTML, CSS, JavaScript, React, Node.js, Express, MongoDB, AWS
+**Development Status:** Planning and documentation
 
-Spend 1–2 hours understanding the architecture, reviewing requirements, sketching pages, and practicing Git. This is a planning lesson; no running application is expected.
+---
 
-## Suggested session
+## 1. Project Introduction
 
-| Minutes | Activity |
-| --- | --- |
-| 0–20 | Read the architecture explanation below |
-| 20–40 | Review requirements and trace enrollment |
-| 40–65 | Sketch the seven page layouts |
-| 65–90 | Clone the repository and inspect its files |
-| 90–120 | Write your answers, commit them, and verify on GitHub |
+The Cloud-Based E-Learning Platform is a full-stack web application designed to provide online learning opportunities for students and course management capabilities for instructors.
 
-## Browser, server, database
+Students will be able to register, log in, explore courses, enroll, access lessons, and monitor their learning progress.
 
-The frontend is the interface displayed by the browser. HTML gives content structure, CSS controls appearance and layout, and JavaScript handles behavior. React will help us organize this interface into reusable components.
+Instructors will be able to create courses, manage lessons, and update their own educational content.
 
-The backend runs on a server. Node.js runs JavaScript outside the browser; Express helps define HTTP endpoints and request handling. The backend validates input, authenticates users, checks permissions, and accesses data.
+The application will use React for the frontend, Node.js and Express for the backend, MongoDB for persistent data storage, and AWS for planned cloud deployment.
 
-MongoDB stores persistent data. A document is one record, such as a course. Collections group documents of a similar purpose. Relationships connect records: a lesson refers to its course and an enrollment refers to a student and course.
+## 2. Day 1 Objectives
 
-During development these services can run locally. Deployment later makes them available through hosted infrastructure.
+The main objectives of Day 1 are:
 
-## Trace an enrollment
+1. Understand the purpose and scope of the project.
+2. Learn the responsibilities of frontend, backend, and database systems.
+3. Understand how browser-server communication works.
+4. Identify application features and user roles.
+5. Define basic application security rules.
+6. Plan the seven primary application pages.
+7. Understand Git and GitHub.
+8. Prepare the project documentation.
 
-1. The student clicks Enroll in the browser.
-2. The frontend sends an HTTP request with authentication information and the course identifier.
-3. The backend verifies identity and student role.
-4. It verifies the course exists and contains lessons.
-5. It writes the enrollment, using a database uniqueness constraint to prevent duplicates even when simultaneous requests occur.
-6. It returns an HTTP response describing success or failure.
-7. The frontend shows the result and updates the interface.
+## 3. Frontend, Backend, and Database
 
-An HTTP request asks a server to perform an operation. A response contains a status and often data. An API defines how clients communicate with a service. We will implement these later.
+### 3.1 Frontend
 
-Hiding a button does not secure an operation: a person can send a request directly. The backend must enforce every protected operation.
+The frontend is the part of the application that users see and interact with through their web browsers.
 
-## Review the scope
+**Technologies:**
 
-Read [requirements.md](requirements.md). Explain the difference between an enrollment and a completion record. Enrollment gives a student access to a course; completion records which lessons that student has finished.
+- HTML — Defines the structure and content of web pages.
+- CSS — Controls the appearance, colors, spacing, and responsive layout.
+- JavaScript — Adds interactivity and dynamic behavior.
+- React — Helps build reusable interface components and manage application state.
 
-Read [page-layouts.md](page-layouts.md) and draw the seven pages on paper. These are proposed layouts, not implemented screens.
+**Example:** When a student clicks an Enroll button, JavaScript can send a request to the backend and update the displayed enrollment status.
 
-## Get the project on your computer
+### 3.2 Backend
 
-Open a terminal in the parent folder where you want the project. If you already cloned this repository, open that existing folder instead of cloning again.
+The backend is responsible for processing requests, validating information, enforcing application rules, and communicating with the database.
 
-```bash
-git clone https://github.com/Asifkalam2003/cloud-elearning-platform.git
-cd cloud-elearning-platform
-git status
+**Technologies:**
+
+- Node.js — Executes JavaScript outside the browser.
+- Express.js — Provides routing and middleware for backend APIs.
+
+**Example:** When a student attempts to enroll in a course, the backend checks whether the student is authenticated, the course exists, the course has lessons, and the student is not already enrolled.
+
+The backend must enforce permissions even when frontend buttons are hidden or disabled.
+
+### 3.3 Database
+
+A database stores application information so that it remains available after users close their browsers or restart their devices.
+
+**Technology:** MongoDB
+
+Planned collections:
+
+| Collection  | Purpose                                |
+| ----------- | -------------------------------------- |
+| Users       | Store student and instructor accounts  |
+| Courses     | Store course information and ownership |
+| Lessons     | Store lessons belonging to courses     |
+| Enrollments | Record student-course enrollment       |
+| Completions | Record completed lessons               |
+
+Passwords must be securely hashed before storage. Plaintext passwords must never be stored.
+
+## 4. Application Architecture
+
+The planned communication flow is:
+
+```text
+Student / Instructor
+        |
+        v
+Web Browser
+        |
+        v
+React Frontend
+        |
+        | HTTP Request
+        v
+Node.js + Express Backend
+        |
+        | Database Operation
+        v
+MongoDB Database
+        |
+        | Result
+        v
+Express Backend
+        |
+        | HTTP Response
+        v
+React Frontend
+        |
+        v
+Updated User Interface
 ```
 
-- `git clone` downloads the repository and its history into a new folder. It also configures the remote called `origin`.
-- `cd` changes the terminal's current folder.
-- `git status` reports the current branch and any local changes. A fresh clone should have a clean working tree.
+During development, the application can run locally. AWS deployment will be addressed in a later phase.
 
-Open this folder through VS Code's File → Open Folder menu. Read README.md and the documents in docs.
+## 5. Core Project Features
 
-## Your implementation task
+### Student Features
 
-Create `docs/day-01-notes.md` locally. Write answers in your own words:
+- Register and log in.
+- Browse and search courses.
+- View course descriptions.
+- Enroll in available courses.
+- Access lessons after enrollment.
+- Mark lessons as completed.
+- Track learning progress.
+- View enrolled courses on the student dashboard.
 
-1. What do HTML, CSS, and JavaScript each do?
-2. What belongs in the frontend versus the backend?
-3. Why must the backend check permissions?
-4. What data must persist after closing the browser?
-5. How does enrollment differ from lesson completion?
-6. What is the progress for 4 completed lessons out of 10?
-7. What changes when a new lesson is added?
-8. What is the difference between commit and push?
-9. Why does .gitignore exclude .env?
+### Instructor Features
 
-Add your observations from drawing the seven page layouts. Do not paste passwords, tokens, or other secrets into notes.
+- Register and log in as an instructor.
+- Create courses.
+- Edit and delete owned courses.
+- Add and manage lessons.
+- View owned courses through the instructor dashboard.
 
-## Save your work with Git
+### Application Security Rules
 
-Run each command separately from the project folder:
+- Students cannot create or modify courses.
+- Instructors cannot modify another instructor's courses.
+- Protected lesson content requires enrollment or authorized course ownership.
+- Students cannot modify another student's learning progress.
+- Duplicate course enrollments must be prevented.
+- Authentication and authorization must be checked on the backend.
 
-```bash
-git status
-git add docs/day-01-notes.md
-git diff --cached
-git commit -m "docs: add Day 1 learning notes"
-git push
-```
+## 6. Seven Planned Application Pages
 
-- `git add` stages the named file for the next commit.
-- `git diff --cached` lets you review the staged content before saving it.
-- `git commit` records a local snapshot with a message.
-- `git push` sends local commits to the configured remote.
+| Page                 | Main components                            |
+| -------------------- | ------------------------------------------ |
+| Login                | Email, password, login button              |
+| Registration         | Name, email, password, role selection      |
+| Course Catalog       | Course cards, search, pagination           |
+| Course Details       | Course information, instructor, enrollment |
+| Student Dashboard    | Enrolled courses and progress              |
+| Lesson Viewer        | Lesson content, navigation, completion     |
+| Instructor Dashboard | Course creation and lesson management      |
 
-If Git asks for author identity, configure your name and actual GitHub email or private commit email with `git config user.name` and `git config user.email`. If authentication is requested, follow GitHub's supported sign-in flow. Never put credentials in repository files.
+All pages should eventually support desktop and mobile screens, clear error messages, and accessible navigation.
 
-## Verify
+These are planned layouts; the visual sketches and actual pages are not yet implemented.
 
-Run `git status`; after a successful commit and push there should be no uncommitted changes and no commits ahead of the remote. Refresh GitHub and check that your notes appear with the correct content.
+## 7. How Course Enrollment Works
 
-## Completion checklist
+1. A student logs into the application.
+2. The student opens the course catalog.
+3. The student selects a course.
+4. The student clicks Enroll.
+5. The frontend sends an HTTP request to the backend.
+6. The backend validates authentication and student permissions.
+7. The backend checks the course and enrollment rules.
+8. MongoDB stores a unique enrollment record.
+9. The backend returns a success or error response.
+10. The frontend updates the student interface.
 
-Repository preparation is complete; the learning tasks below remain for you to verify.
+## 8. Enrollment Versus Lesson Completion
 
-- [x] Repository created
-- [x] Requirements and application rules documented
-- [x] README and .gitignore committed
-- [x] Proposed page layouts documented
-- [ ] Explain architecture in your own words
-- [ ] Draw and review seven page sketches
-- [ ] Clone and open the project locally
-- [ ] Write and push your learning notes
+**Enrollment** records that a student has joined a particular course.
 
-Next lesson: HTML structure, semantic elements, links, and accessible forms.
+**Lesson completion** records that a student has finished a particular lesson.
+
+Enrollment provides access to protected course lessons, while completion records help calculate learning progress.
+
+For example, enrolling in a course with 10 lessons does not mean the student has completed any lessons.
+
+## 9. Course Progress Calculation
+
+The planned progress formula is:
+
+**Progress (%) = (Completed current lessons / Total current lessons) × 100**
+
+Example:
+
+- Total lessons: 10
+- Completed lessons: 4
+- Progress: (4 / 10) × 100 = 40%
+
+If two additional lessons are added, the course contains 12 lessons.
+
+Updated progress:
+
+(4 / 12) × 100 = 33.33%
+
+The progress percentage changes because the total number of lessons changes.
+
+For a course with zero lessons, progress is 0%, and new enrollments are not permitted.
+
+## 10. Git and GitHub Fundamentals
+
+**Git** is a version control system used to track changes to source code and project documentation.
+
+**GitHub** is a platform used to host Git repositories and collaborate on software projects.
+
+Important commands:
+
+| Command      | Purpose                               |
+| ------------ | ------------------------------------- |
+| `git clone`  | Download a repository                 |
+| `git status` | View working directory status         |
+| `git add`    | Stage changes                         |
+| `git commit` | Save changes in local history         |
+| `git push`   | Upload commits to a remote repository |
+| `git pull`   | Retrieve and integrate remote changes |
+
+### Difference Between Commit and Push
+
+A commit saves a snapshot in the local Git repository.
+
+A push transfers local commits to a remote repository such as GitHub.
+
+### Why .gitignore Is Important
+
+The `.gitignore` file prevents selected files from being tracked.
+
+For example, `.env` files can contain database credentials, API keys, and other secrets. These must not be committed to a public repository.
+
+## 11. Day 1 Learning Questions and Answers
+
+**Q1. What do HTML, CSS, and JavaScript do?**
+
+HTML creates page structure, CSS styles the page, and JavaScript adds interactive behavior.
+
+**Q2. What belongs in the frontend versus the backend?**
+
+The frontend displays information and handles user interaction. The backend validates requests, enforces permissions, performs business operations, and communicates with the database.
+
+**Q3. Why must the backend check permissions?**
+
+Frontend controls can be bypassed. Backend permission checks prevent unauthorized access and changes to protected resources.
+
+**Q4. What data must persist after closing the browser?**
+
+User accounts, course information, lessons, enrollments, and lesson completion records must persist.
+
+**Q5. How does enrollment differ from lesson completion?**
+
+Enrollment records course membership, while completion records learning activity for individual lessons.
+
+**Q6. What is the progress for four completed lessons out of ten?**
+
+The progress is 40%.
+
+**Q7. What changes when a new lesson is added?**
+
+The total lesson count increases, which can decrease the calculated progress percentage until the additional lesson is completed.
+
+**Q8. What is the difference between commit and push?**
+
+Commit saves changes locally; push sends commits to the remote repository.
+
+**Q9. Why does .gitignore exclude .env?**
+
+Because `.env` commonly contains sensitive configuration values that must not be published.
+
+## 12. Day 1 Project Status
+
+### Documentation Completed
+
+- [x] Project overview defined.
+- [x] Technology stack selected.
+- [x] Core features identified.
+- [x] Student and instructor roles defined.
+- [x] Application architecture documented.
+- [x] Functional requirements documented.
+- [x] Seven page layouts planned.
+- [x] GitHub repository created.
+
+### Remaining Activities
+
+- [x] Draw and review seven page sketches.
+- [x] Confirm local Git repository setup.
+- [x] Review and personalize learning notes.
+- [x] Commit and push Day 1 notes to GitHub.
+
+## 13. Next Steps — Day 2
+
+Day 2 will introduce HTML fundamentals and begin the first static application pages.
+
+Topics will include:
+
+- HTML document structure.
+- Semantic HTML elements.
+- Headings, paragraphs, and links.
+- Forms, labels, and inputs.
+- Basic form validation.
+- Building the first static login and registration pages.
+
+## Conclusion
+
+Day 1 establishes the foundation for the Cloud-Based E-Learning Platform. The project scope, planned architecture, technologies, application rules, and page requirements have been documented.
+
+The next phase will move from planning into frontend implementation, starting with HTML.
+
+**Current Project Status:** Day 1 documentation prepared. Application development and deployment have not started.
